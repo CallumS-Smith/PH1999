@@ -99,7 +99,7 @@ npcalculated = np.array(calculated)
 
 datapoints = 100
 x = npradii
-y = npvelocities
+y = npcalculated
 plt.plot(x,y)
 plt.xlabel("Radius (kpc)")
 plt.ylabel("Velocity (km/s)")

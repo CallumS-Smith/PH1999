@@ -90,7 +90,7 @@ G = 4.3e-6
 #Function is V = sqrt(GM/r)
 calculated = []
 
-#this loop calcualtes the velocity for each mass and radius pair
+#this loop calcualtes the velocity for each mass and radius pair for Q7
 for i in range(0, len(masses)):
     
     calculated.append(math.sqrt(float(G*float(masses[i]))/float(radii[i])))
@@ -99,7 +99,7 @@ npcalculated = np.array(calculated)
 
 datapoints = 100
 x = npradii
-y = npcalculated
+y = npvelocities
 plt.plot(x,y)
 plt.xlabel("Radius (kpc)")
 plt.ylabel("Velocity (km/s)")

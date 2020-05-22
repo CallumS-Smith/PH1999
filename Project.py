@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 ##################importing data##################
 file = open("galaxy1.txt","r")
@@ -46,38 +47,60 @@ for i in range(9,len(array2),5):
     
 for i in range(10,len(array2),5):
     deltaRadii.append(array2[i])
-    
-print("RADII:")
-print(radii)
-print("\n\n")
-print("VELOCITIES: ")
-print(velocities)
-print("\n\n")
-print("DELTARADII: ")
-print(deltaRadii)
-print("\n\n")
-print("DELTAVELOS: ")
-print(deltaVelos)
-print("\n\n")
-print("MASSES: ")
-print(masses)
+###TESTING####
+#Checking lists are correctly populated
+#print("RADII:")
+#print(radii)
+#print("\n\n")
+#print("VELOCITIES: ")
+#print(velocities)
+#print("\n\n")
+#print("DELTARADII: ")
+#print(deltaRadii)
+#print("\n\n")
+#print("DELTAVELOS: ")
+#print(deltaVelos)
+#print("\n\n")
+#print("MASSES: ")
+#print(masses)
 
-temp = []
-for i in range(0,len(array)-1):
-    temp.append(radii[i])
-    temp.append(velocities[i])
-    temp.append(deltaVelos[i])
-    temp.append(deltaRadii[i])
-    temp.append(masses[i])
-    print(temp)
-    temp = []
+#####TESTING#####
+#Ensuring database is rebuilt correctly
+#temp = []
+#for i in range(0,len(array)-1):
+#    temp.append(radii[i])
+#    temp.append(velocities[i])
+#    temp.append(deltaVelos[i])
+#    temp.append(deltaRadii[i])
+#    temp.append(masses[i])
+#    print(temp)
+#    temp = []
+#################################################
+
+#Making numpy arrays.. finally...
+
+npradii = np.array(radii)
+npvelocities = np.array(velocities)
+npmasses = np.array(masses)
+npdeltaRadii = np.array(deltaRadii)
+npdeltaVelos = np.array(deltaVelos)
+
+#gravitational constant G
+G = 4.3e-6
+#Function is V = sqrt(GM/r)
+calculated = []
+
+#this loop calcualtes the velocity for each mass and radius pair
+for i in range(0, len(masses)):
     
+    calculated.append(math.sqrt(float(G*float(masses[i]))/float(radii[i])))
+    
+npcalculated = np.array(calculated)
+
 datapoints = 100
-x = np.array([1,2,3,4,5,6])
-y = np.array([10,100,1000,10000,100000,1000000])
-y = np.log10(y)
+x = npradii
+y = npcalculated
 plt.plot(x,y)
-plt.xlabel("Pressure/Pa")
-plt.ylabel("Volume/m$^3$")
-plt.axis([0,7,0,7])
+plt.xlabel("Radius (kpc)")
+plt.ylabel("Velocity (km/s)")
 plt.show()

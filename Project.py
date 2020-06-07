@@ -45,6 +45,15 @@ for i in range(0, len(masses)):
 npcalculated = np.array(calculated)
 
 
+####CALCULATING Mdm (mass of dark matter)####
+darkMasses = []
+p0 = 100e6
+rc = 1.87
+for i in radii:
+    darkMasses.append((np.pi*float(4)*p0*i**2)*(float(i)-rc*math.atan(float(i)/rc)))
+    
+print(darkMasses)
+
 ####PLOTTING####
 datapoints = 100
 x = npradii

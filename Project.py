@@ -50,19 +50,30 @@ darkMasses = []
 p0 = 100e6
 rc = 1.87
 for i in radii:
-    darkMasses.append((np.pi*float(4)*p0*i**2)*(float(i)-rc*math.atan(float(i)/rc)))
-    
-print(darkMasses)
+    darkMasses.append(float((np.pi*4*p0*float(rc)**2)*(float(i)-rc*math.atan(float(i)/rc))))
+npdarkMasses = np.array(darkMasses)
 
+
+massAndDark = []
+for i in range(0,len(masses)):
+    massAndDark.append(float(float(masses[i])+float(darkMasses[i])))
+
+npmassAndDark = np.array(massAndDark)
+print(massAndDark)
 ####PLOTTING####
 datapoints = 100
 x = npradii
 y = npvelocities
 ####Second function below###
 y2 = npcalculated
-############################
-plt.plot(x,y)
-plt.plot(x,y2)
+###Mass and Dark mass curves###
+y3 = npmasses
+y4 = npdarkMasses
+y5 = npmassAndDark
+
+plt.plot(x,y3)
+plt.plot(x,y4)
+plt.plot(x,y5)
 plt.xlabel("Radius (kpc)")
-plt.ylabel("Velocity (km/s)")
+plt.ylabel("Mass (Solar Masses)")
 plt.show()

@@ -58,7 +58,14 @@ massAndDark = []
 for i in range(0,len(masses)):
     massAndDark.append(float(float(masses[i])+float(darkMasses[i])))
 
+
+calculated2 = []
+for i in range(0, len(massAndDark)): 
+    calculated2.append(float(math.sqrt(float(G*float(massAndDark[i]))/float(radii[i]))))
+npcalculated2 = np.array(calculated2)
+
 npmassAndDark = np.array(massAndDark)
+
 print(massAndDark)
 ####PLOTTING####
 datapoints = 100
@@ -71,9 +78,11 @@ y3 = npmasses
 y4 = npdarkMasses
 y5 = npmassAndDark
 
-plt.plot(x,y3)
-plt.plot(x,y4)
-plt.plot(x,y5)
+y6 = npcalculated2
+
+plt.plot(x,y)
+plt.plot(x,y2)
+plt.plot(x,y6)
 plt.xlabel("Radius (kpc)")
-plt.ylabel("Mass (Solar Masses)")
+plt.ylabel("Velocities (km/s)")
 plt.show()

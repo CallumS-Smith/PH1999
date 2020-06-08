@@ -51,6 +51,13 @@ p0 = 100e6
 rc = 1.87
 for i in radii:
     darkMasses.append(float((np.pi*4*p0*float(rc)**2)*(float(i)-rc*math.atan(float(i)/rc))))
+
+
+##
+
+
+
+##
 npdarkMasses = np.array(darkMasses)
 
 
@@ -63,10 +70,44 @@ calculated2 = []
 for i in range(0, len(massAndDark)): 
     calculated2.append(float(math.sqrt(float(G*float(massAndDark[i]))/float(radii[i]))))
 npcalculated2 = np.array(calculated2)
+########################################
+minchi2=10000
+minslope=0.0
+Mass = 0
+DarkMass = 0
+CombinedMass= 0
+Velocity = 0
 
+for rho2 in np.arange(10000000, 1000000000, 50000):
+    total = 0
+    for i in range(0,len(radii)):
+        Mass = masses[i]
+        DarkMass = 4*np.pi*rho2*rc**2*(radii[i]-rc*math.atan(radii[i]/rc))
+        CombinedMass = Mass + DarkMass
+        Velocity = math.sqrt((G*CombinedMass)/radii[i])
+        total +=(velocities[i]-Velocity)**2
+        total = total/deltaVelos[i]**2
+      
+    chi2=total
+    if(chi2<minchi2):
+        minchi2=chi2
+        minslope=rho2
+print(minslope)
+
+massAndDark2 = []
+for i in range(0,len(masses)):
+    DarkMass = 4*np.pi*minslope*rc**2*(radii[i]-rc*math.atan(radii[i]/rc))
+    massAndDark2.append(masses[i]+DarkMass)
+
+calculated3 = []
+for i in range(0, len(massAndDark2)): 
+    calculated3.append(float(math.sqrt(float(G*float(massAndDark2[i]))/float(radii[i]))))
+npcalculated3 = np.array(calculated3)
+
+    
+###########################################
 npmassAndDark = np.array(massAndDark)
 
-print(massAndDark)
 ####PLOTTING####
 datapoints = 100
 x = npradii
@@ -79,10 +120,11 @@ y4 = npdarkMasses
 y5 = npmassAndDark
 
 y6 = npcalculated2
+y7 = npcalculated3
 
 plt.plot(x,y)
-plt.plot(x,y2)
-plt.plot(x,y6)
+plt.plot(x,y6)#old curve old rho
+plt.plot(x,y7)# New curve new rho2
 plt.xlabel("Radius (kpc)")
 plt.ylabel("Velocities (km/s)")
 plt.show()

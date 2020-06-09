@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import math
 
 ##################importing data##################
-file = open("galaxy1.txt","r")
+file = open("galaxy3.txt","r")
 rawData = file.readlines()
 file.close()
 
@@ -95,10 +95,10 @@ for rho2 in np.arange(10000000, 1000000000, 50000):#Step is high here to increas
         
 
 #print(minslope)
-
+rs = 2
 massAndDark2 = []
 for i in range(0,len(masses)):
-    DarkMass = 4*np.pi*minslope*rc**2*(radii[i]-rc*math.atan(radii[i]/rc))
+    DarkMass = 4*np.pi*minslope*rs**3*(math.log(((radii[i]+rs)/rs)-((radii[i])/(radii[i]+rs))))
     massAndDark2.append(masses[i]+DarkMass)
 
 calculated3 = []
@@ -150,8 +150,7 @@ y5 = npmassAndDark
 y6 = npcalculated2
 y7 = npcalculated3
 
-plt.plot(x,y)
-plt.plot(x,y6)#old curve old rho
+plt.plot(x,y)#old curve old rho
 plt.plot(x,y7)# New curve new rho2
 plt.errorbar(x,y7,npuncertainties,fmt='bo')
 plt.xlabel("Radius (kpc)")

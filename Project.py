@@ -78,7 +78,7 @@ DarkMass = 0
 CombinedMass= 0
 Velocity = 0
 
-for rho2 in np.arange(10000000, 1000000000, 50000):
+for rho2 in np.arange(10000000, 1000000000, 50000):#Step is high here to increase speed
     total = 0
     for i in range(0,len(radii)):
         Mass = masses[i]
@@ -94,7 +94,7 @@ for rho2 in np.arange(10000000, 1000000000, 50000):
         minslope=rho2
         
 
-print(minslope)
+#print(minslope)
 
 massAndDark2 = []
 for i in range(0,len(masses)):
@@ -128,7 +128,14 @@ npuncertainties = np.array(uncertainties)
     
 ######################
 npmassAndDark = np.array(massAndDark)
+#######
+fractionOfDarkMass = []
+for i in range(0,len(massAndDark2)):
+    fractionOfDarkMass.append(massAndDark2[i]/(masses[i]+massAndDark2[i]))
 
+    
+#######
+print("Fraction of Dark Mass: ", np.average(fractionOfDarkMass))
 ####PLOTTING####
 datapoints = 100
 x = npradii

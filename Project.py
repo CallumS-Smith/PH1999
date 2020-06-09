@@ -92,6 +92,8 @@ for rho2 in np.arange(10000000, 1000000000, 50000):
     if(chi2<minchi2):
         minchi2=chi2
         minslope=rho2
+        
+
 print(minslope)
 
 massAndDark2 = []
@@ -103,9 +105,28 @@ calculated3 = []
 for i in range(0, len(massAndDark2)): 
     calculated3.append(float(math.sqrt(float(G*float(massAndDark2[i]))/float(radii[i]))))
 npcalculated3 = np.array(calculated3)
+#####ERROR BARS#######
+#plus or minus value worked out prevously: 6770000
+pm = 6770000
+minslopeMax = minslope + pm
+uncertainties = []
 
+massAndDark3 = []
+for i in range(0,len(masses)):
+    DarkMass = 4*np.pi*minslopeMax*rc**2*(radii[i]-rc*math.atan(radii[i]/rc))
+    massAndDark3.append(masses[i]+DarkMass)
+
+calculated4 = []
+for i in range(0, len(massAndDark2)): 
+    calculated4.append(float(math.sqrt(float(G*float(massAndDark3[i]))/float(radii[i]))))
+npcalculated4 = np.array(calculated3)
+
+for i in range(0,len(calculated4)):
+    uncertainties.append(calculated4[i]-calculated3[i])
+
+npuncertainties = np.array(uncertainties)
     
-###########################################
+######################
 npmassAndDark = np.array(massAndDark)
 
 ####PLOTTING####
@@ -125,6 +146,7 @@ y7 = npcalculated3
 plt.plot(x,y)
 plt.plot(x,y6)#old curve old rho
 plt.plot(x,y7)# New curve new rho2
+plt.errorbar(x,y7,npuncertainties,fmt='bo')
 plt.xlabel("Radius (kpc)")
 plt.ylabel("Velocities (km/s)")
 plt.show()
